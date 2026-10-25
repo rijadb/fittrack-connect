@@ -1,0 +1,72 @@
+erDiagram
+    USERS ||--o{ WORKOUT_PLANS : "creates (trainer_id)"
+    USERS ||--o{ WORKOUT_PLANS : "receives (client_id)"
+    WORKOUT_PLANS ||--o{ PLAN_EXERCISES : contains
+    EXERCISES ||--o{ PLAN_EXERCISES : included_in
+    USERS ||--o{ PROGRESS_LOGS : records
+    WORKOUT_PLANS o|--o{ PROGRESS_LOGS : "optional plan"
+    EXERCISES o|--o{ PROGRESS_LOGS : "optional exercise"
+    USERS ||--o{ APPOINTMENTS : "trainer_id"
+    USERS ||--o{ APPOINTMENTS : "client_id"
+
+    USERS {
+        int id PK
+        varchar name
+        varchar email UK
+        varchar password_hash
+        enum role "admin, trainer, client"
+        datetime created_at
+    }
+    WORKOUT_PLANS {
+        int id PK
+        int trainer_id FK
+        int client_id FK
+        varchar title
+        varchar focus
+        varchar level
+        int sessions_per_week
+        text notes
+        text nutrition_guidance
+        datetime created_at
+    }
+    EXERCISES {
+        int id PK
+        varchar name
+        varchar muscle_group
+        varchar equipment
+        varchar difficulty
+        text description
+    }
+    PLAN_EXERCISES {
+        int plan_id PK,FK
+        int exercise_id PK,FK
+        int sets
+        int reps
+        int rest_seconds
+        int sort_order
+    }
+    PROGRESS_LOGS {
+        int id PK
+        int client_id FK
+        int workout_plan_id FK "nullable"
+        int exercise_id FK "nullable"
+        date log_date
+        enum log_type "weight, water, training, food"
+        decimal value
+        varchar unit
+        text notes
+        varchar external_food_id "nullable"
+        decimal calories_kcal "nullable"
+        decimal protein_g "nullable"
+        decimal carbs_g "nullable"
+        decimal fat_g "nullable"
+    }
+    APPOINTMENTS {
+        int id PK
+        int trainer_id FK
+        int client_id FK
+        datetime scheduled_at
+        int duration_minutes
+        enum status "pending, confirmed, completed, cancelled"
+        varchar meeting_url "nullable"
+    }

@@ -1,0 +1,26 @@
+# Secrets / local configuration
+.env
+.env.*
+!.env.example
+backend/config/config.php
+backend/config/*.local.php
+
+# Dependencies / build output
+vendor/
+node_modules/
+dist/
+coverage/
+
+# Runtime logs / temp
+backend/logs/*
+!backend/logs/.gitkeep
+*.log
+*.tmp
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+
+# Local planning notes
+docs/PROJECT_PLAN.md
+docs/SUBMISSION.md

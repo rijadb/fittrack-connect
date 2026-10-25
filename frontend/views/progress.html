@@ -1,0 +1,40 @@
+<div class="page-header">
+  <div>
+    <div class="page-eyebrow">YOUR METRICS</div>
+    <h1 class="page-title">Progress tracker</h1>
+    <p class="page-intro">
+      Review training, body-weight, hydration and food log entries.
+    </p>
+  </div>
+  <div class="page-actions">
+    <button
+      class="btn btn-accent"
+      data-action="add"
+      data-entity="progress_logs"
+    >
+      <i class="bi bi-plus-lg me-1"></i> Add progress log
+    </button>
+  </div>
+</div>
+<div id="progressStats" class="grid-stats"></div>
+<section class="card-ui pad-card">
+  <div class="section-heading">
+    <h2>Activity log</h2>
+    <span class="tiny-chip">Recent activity</span>
+  </div>
+  <div class="table-wrap">
+    <table class="table-ui">
+      <thead>
+        <tr>
+          <th>Date</th>
+          <th>Client</th>
+          <th>Metric</th>
+          <th>Value</th>
+          <th>Notes</th>
+          <th class="text-end">Actions</th>
+        </tr>
+      </thead>
+      <tbody id="progressRows"></tbody>
+    </table>
+  </div>
+</section>

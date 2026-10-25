@@ -1,0 +1,66 @@
+<div class="page-header">
+  <div>
+    <div class="page-eyebrow">FUEL YOUR TRAINING</div>
+    <h1 class="page-title">Nutrition explorer</h1>
+    <p class="page-intro">
+      Search for foods and review nutrition information before adding it to your
+      progress log.
+    </p>
+  </div>
+  <div class="page-actions">
+    <a href="#/progress" class="btn btn-soft"
+      >Open food log <i class="bi bi-arrow-right ms-1"></i
+    ></a>
+  </div>
+</div>
+
+<div class="two-columns">
+  <section class="card-ui pad-card">
+    <div class="section-heading">
+      <h2>Food search</h2>
+      <span class="tiny-chip">Food database</span>
+    </div>
+    <div class="input-group mb-3">
+      <span class="input-group-text"><i class="bi bi-search"></i></span
+      ><input
+        id="foodSearch"
+        class="form-control"
+        type="search"
+        placeholder="Try: chicken, banana, oats..."
+        aria-label="Search demo foods"
+      />
+    </div>
+    <p class="muted" style="font-size: 12px; margin-bottom: 13px">
+      Choose a food to preview its sample nutrients per 100 g.
+    </p>
+    <div id="foodChoices" class="food-grid"></div>
+  </section>
+  <section class="card-ui pad-card">
+    <div class="section-heading">
+      <h2>Nutritional breakdown</h2>
+      <span class="tiny-chip blue">Per 100 g · sample</span>
+    </div>
+    <div
+      style="display: flex; gap: 13px; align-items: center; margin-bottom: 19px"
+    >
+      <div id="foodBigIcon" style="font-size: 45px">🍌</div>
+      <div>
+        <h3
+          id="selectedFoodTitle"
+          style="font-size: 20px; font-weight: 800; margin: 0"
+        >
+          Banana
+        </h3>
+        <div class="muted" style="font-size: 12px">Nutrition estimate</div>
+      </div>
+    </div>
+    <div id="macroDetails" class="macro-grid"></div>
+    <button
+      id="logSelectedFood"
+      class="btn btn-accent w-100 mt-4"
+      data-action="log-food"
+    >
+      <i class="bi bi-plus-lg me-1"></i> Log this food
+    </button>
+  </section>
+</div>
