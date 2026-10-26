@@ -1,0 +1,41 @@
+<div class="page-header">
+  <div>
+    <div class="page-eyebrow">PROGRAM DESIGN</div>
+    <h1 class="page-title">Workout plans</h1>
+    <p class="page-intro">
+      Build structured routines and connect each plan to a trainer and client.
+    </p>
+  </div>
+  <div class="page-actions">
+    <button
+      class="btn btn-accent"
+      data-action="add"
+      data-entity="workout_plans"
+    >
+      <i class="bi bi-plus-lg me-1"></i> Create new plan
+    </button>
+  </div>
+</div>
+<div class="card-ui search-panel">
+  <div
+    class="d-flex flex-wrap justify-content-between gap-3 align-items-center"
+  >
+    <div>
+      <h2 style="font-size: 16px; font-weight: 800; margin: 0 0 4px">
+        Training programs
+      </h2>
+      <span id="plansCount" class="muted" style="font-size: 12px"></span>
+    </div>
+    <div class="input-group input-search" style="max-width: 285px">
+      <span class="input-group-text"><i class="bi bi-search"></i></span
+      ><input
+        class="form-control"
+        type="search"
+        placeholder="Search workout plans..."
+        data-search="plans"
+        aria-label="Search plans"
+      />
+    </div>
+  </div>
+</div>
+<div id="planCards" class="plan-grid"></div>

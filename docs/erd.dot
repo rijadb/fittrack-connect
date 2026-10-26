@@ -1,0 +1,18 @@
+digraph FitTrack {
+  graph [fontname="Arial",bgcolor="#ffffff",rankdir=LR,ranksep=0.8,nodesep=0.5,pad=0.3,splines=polyline];
+  node [shape=plain, fontname="Arial"];
+  edge [fontname="Arial",color="#7c8ba0",fontsize=10,arrowsize=0.7];
+  users [label=<<TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0" CELLPADDING="6" COLOR="#d7e1ea"><TR><TD BGCOLOR="#162840"><FONT COLOR="white"><B>users</B></FONT></TD></TR><TR><TD ALIGN="LEFT"><B>PK</B> id</TD></TR><TR><TD ALIGN="LEFT">name, email (unique)</TD></TR><TR><TD ALIGN="LEFT">password_hash, role</TD></TR><TR><TD ALIGN="LEFT">created_at</TD></TR></TABLE>>];
+  workout_plans [label=<<TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0" CELLPADDING="6" COLOR="#d7e1ea"><TR><TD BGCOLOR="#b5f344"><B>workout_plans</B></TD></TR><TR><TD ALIGN="LEFT"><B>PK</B> id</TD></TR><TR><TD ALIGN="LEFT"><B>FK</B> trainer_id → users</TD></TR><TR><TD ALIGN="LEFT"><B>FK</B> client_id → users</TD></TR><TR><TD ALIGN="LEFT">title, focus, level</TD></TR><TR><TD ALIGN="LEFT">sessions_per_week</TD></TR><TR><TD ALIGN="LEFT">notes, nutrition_guidance</TD></TR></TABLE>>];
+  exercises [label=<<TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0" CELLPADDING="6" COLOR="#d7e1ea"><TR><TD BGCOLOR="#b5f344"><B>exercises</B></TD></TR><TR><TD ALIGN="LEFT"><B>PK</B> id</TD></TR><TR><TD ALIGN="LEFT">name, muscle_group</TD></TR><TR><TD ALIGN="LEFT">equipment, difficulty</TD></TR><TR><TD ALIGN="LEFT">description</TD></TR></TABLE>>];
+  plan_exercises [label=<<TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0" CELLPADDING="6" COLOR="#d7e1ea"><TR><TD BGCOLOR="#e9eefd"><B>plan_exercises · link</B></TD></TR><TR><TD ALIGN="LEFT"><B>PK FK</B> plan_id</TD></TR><TR><TD ALIGN="LEFT"><B>PK FK</B> exercise_id</TD></TR><TR><TD ALIGN="LEFT">sets, reps</TD></TR><TR><TD ALIGN="LEFT">rest_seconds, sort_order</TD></TR></TABLE>>];
+  progress_logs [label=<<TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0" CELLPADDING="6" COLOR="#d7e1ea"><TR><TD BGCOLOR="#b5f344"><B>progress_logs</B></TD></TR><TR><TD ALIGN="LEFT"><B>PK</B> id</TD></TR><TR><TD ALIGN="LEFT"><B>FK</B> client_id → users</TD></TR><TR><TD ALIGN="LEFT"><B>FK?</B> workout_plan_id, exercise_id</TD></TR><TR><TD ALIGN="LEFT">log_date, log_type, value, unit</TD></TR><TR><TD ALIGN="LEFT">notes, food/macros (optional)</TD></TR></TABLE>>];
+  appointments [label=<<TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0" CELLPADDING="6" COLOR="#d7e1ea"><TR><TD BGCOLOR="#b5f344"><B>appointments</B></TD></TR><TR><TD ALIGN="LEFT"><B>PK</B> id</TD></TR><TR><TD ALIGN="LEFT"><B>FK</B> trainer_id → users</TD></TR><TR><TD ALIGN="LEFT"><B>FK</B> client_id → users</TD></TR><TR><TD ALIGN="LEFT">scheduled_at, duration_minutes</TD></TR><TR><TD ALIGN="LEFT">status, meeting_url</TD></TR></TABLE>>];
+  users -> workout_plans [label="1 : many × 2 roles"];
+  users -> progress_logs [label="1 : many"];
+  users -> appointments [label="1 : many × 2 roles"];
+  workout_plans -> plan_exercises [label="1 : many"];
+  exercises -> plan_exercises [label="1 : many"];
+  workout_plans -> progress_logs [style=dashed,label="optional"];
+  exercises -> progress_logs [style=dashed,label="optional"];
+}
