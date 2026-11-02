@@ -19,7 +19,10 @@ FitTrack Connect is a client–trainer personal training portal with five core e
 1. `frontend/views/*.html` contain structure only. In M1, `frontend/js/app.js` handles view navigation and sample interactions. In M5, separate it into frontend MVC and API service modules; only service files make backend AJAX requests.
 2. `backend/routes/` defines endpoints, reads requests, calls services, and returns JSON.
 3. `backend/services/` handles validation, permissions/business logic and only layer permitted to call DAO classes. External API logic belongs in a dedicated service.
-4. `backend/dao/` uses a shared PDO connection, prepared statements and reusable DAO base class. No direct SQL in route handlers.
+4. `backend/config/Database.php` creates the PDO connection.
+   `backend/dao/BaseDao.php` provides reusable CRUD methods.
+   Entity DAO classes handle database operations using prepared
+   statements. Application services are responsible for calling DAOs.
 5. `backend/middleware/` houses reusable JWT authentication, role authorization, request logging and error handling. Never copy checks into every route.
 6. `backend/config/config.php`, `.env` and `backend/logs/*.log` are **not committed**. Only `config.example.php` is committed.
 
