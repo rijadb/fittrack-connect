@@ -1,5 +1,4 @@
 <?php
-/** M2–M4: Copy this file to config.php, then supply local secrets. Never commit config.php. */
 return [
     'db' => [
         'host' => '127.0.0.1',

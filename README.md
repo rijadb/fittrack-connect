@@ -1,4 +1,4 @@
-# FitTrack Connect 🏋️
+# FitTrack Connect
 
 **Personal Training & Nutrition Portal** — a responsive single-page web app where trainers design and assign workout plans, clients track metrics, and both schedule virtual training appointments.
 
@@ -26,6 +26,32 @@ Navigation is hash-routed (`#/dashboard`, `#/plans`, etc.) and swaps HTML view t
 
 **Auxiliary junction table:** `plan_exercises` links many exercises to many workout plans and stores sets/reps/rest/order. Therefore the design has **five core entities and six database tables**. The planned schema is shown in [docs/ERD.md](docs/ERD.md) and the picture [docs/ERD.png](docs/ERD.png).
 
+## Database setup
+
+The MySQL database schema and sample data are provided in
+`database/fittrack_connect.sql`.
+
+To set up the database:
+
+1. Import the SQL file into MySQL using DBeaver or the MySQL command line.
+2. Copy `backend/config/config.example.php` to `backend/config/config.php`.
+3. Enter your local database host, port, username and password in `config.php`.
+
+The application uses PDO for database access. Common CRUD operations
+are implemented in `BaseDao.php`, while separate DAO classes manage
+users, workout plans, exercises, progress logs and appointments.
+
+The `PlanExerciseDao` class manages exercise assignments to workout plans.
+
+To test database operations, run:
+
+    php backend/tests/dao_smoke_test.php
+
+The test verifies CRUD operations and rolls back its changes.
+
+The frontend currently uses sample data. Backend API integration
+will allow the interface to retrieve and modify database records.
+
 ### Planned access rules
 
 | Role        | Planned permissions                                                                                    |
@@ -33,8 +59,6 @@ Navigation is hash-routed (`#/dashboard`, `#/plans`, etc.) and swaps HTML view t
 | **Admin**   | Manage users and all core entities (CRUD); view operational records.                                   |
 | **Trainer** | Manage own plans and plan exercises, assigned clients' relevant logs and coaching appointments.        |
 | **Client**  | View assigned plans/exercises; manage own progress and appointments; search foods; update own profile. |
-
-Role checking **must be performed on the backend**, not just by hiding buttons. The current demo role switch has no security function.
 
 ## Planned external API
 
@@ -44,29 +68,48 @@ Planned integration: `GET /api/nutrition/search?q=...` and a follow-up nutrient-
 
 ## Architecture / project tree
 
-```text
 fittrack-connect/
 ├── frontend/
-│   ├── index.html          # SPA shell, navigation and dialog
-│   ├── css/styles.css      # Custom responsive styling
-│   ├── js/app.js           # M1 hash router and demo UI logic
-│   ├── js/mockData.js      # M1 static sample data ONLY
-│   ├── views/*.html        # 10 HTML page templates
-│   └── assets/             # Static assets
-├── backend/
-│   ├── routes/             # FlightPHP route definitions
-│   ├── services/           # Business logic
-│   ├── dao/                # PDO data access
-│   ├── middleware/         # JWT, roles, request/error handlers
-│   ├── config/config.example.php
-│   └── logs/               # Gitignored runtime info/error logs
-├── docs/
-│   ├── ERD.md / ERD.mmd / ERD.png
-│   └── AI_LOG.md
+│ ├── index.html # Main SPA layout and navigation
+│ ├── css/
+│ │ └── styles.css # Responsive styling
+│ ├── js/
+│ │ ├── app.js # Navigation and UI functionality
+│ │ └── mockData.js # Sample frontend data
+│ ├── views/ # HTML page templates
+│ └── assets/ # Static assets
 │
-├── .gitignore
-└── AGENTS.md
-```
+├── backend/
+│ ├── config/
+│ │ ├── Database.php # PDO database connection
+│ │ └── config.example.php # Configuration template
+│ ├── dao/
+│ │ ├── BaseDao.php # Reusable CRUD operations
+│ │ ├── UserDao.php
+│ │ ├── WorkoutPlanDao.php
+│ │ ├── ExerciseDao.php
+│ │ ├── ProgressLogDao.php
+│ │ ├── AppointmentDao.php
+│ │ └── PlanExerciseDao.php
+│ ├── tests/
+│ │ └── dao_smoke_test.php # Database operation tests
+│ ├── routes/ # API endpoints
+│ ├── services/ # Business logic
+│ ├── middleware/ # Authentication and logging
+│ └── logs/ # Runtime logs (Gitignored)
+│
+├── database/
+│ └── fittrack_connect.sql # Database schema and sample data
+│
+├── docs/
+│ ├── ERD.md # Database relationships
+│ ├── ERD.mmd # Mermaid ER diagram
+│ ├── ERD.png # ER diagram image
+│ └── AI_LOG.md # AI usage documentation
+│
+├── .gitignore # Excluded files and directories
+├── AGENTS.md # Development conventions
+└── README.md # Project documentation
 
 The REST backend will be pure PHP with **FlightPHP**, **PDO prepared statements**, **MySQL** and **JWT**. Frontend pages remain HTML/CSS/JS and will use AJAX (e.g. `fetch`) through dedicated frontend service modules.
 
