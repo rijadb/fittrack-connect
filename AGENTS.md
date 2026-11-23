@@ -44,3 +44,14 @@ FitTrack Connect is a client–trainer personal training portal with five core e
 - Store sensitive configuration outside the repository.
 - Update documentation when important changes are made.
 - Keep the code organized and easy to maintain.
+
+##Current implementation status (Milestone 3)
+
+- The MySQL schema and reusable PDO DAOs are implemented under database/ and backend/dao/.
+- FlightPHP REST routes are in backend/routes/; input validation/business logic is in backend/services/; API bootstrap is backend/index.php.
+- OpenAPI is at backend/docs/openapi.json and Swagger UI is served by GET /docs.
+- Spoonacular is accessed only through SpoonacularService; its API key belongs in the local Git-ignored backend/config/config.php.
+- Local testing passed for five-entity CRUD, workout plan/exercise association and Spoonacular ingredient search.
+- The frontend still displays sample data and does not yet consume the backend API.
+- JWT login and role-based authorization are planned, not implemented. Do not expose the current API publicly. Protect privileged routes and enforce record ownership before production use.
+- Keep backend/composer.lock versioned, but ignore backend/vendor/ and local configuration or log files.
