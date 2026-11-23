@@ -54,3 +54,20 @@ An automatically generated documentation patch was based on an earlier version o
 The database was successfully imported into MySQL 8.0.46. CRUD operations for all five core entities and the workout-plan exercise relationships were tested using PHP PDO.
 
 The test completed successfully, and temporary test data was rolled back.
+
+## Milestone 3 — Services, REST API, Swagger and external API
+
+AI tool: ChatGPT
+
+How AI was used: Assisted in extending the existing PDO DAO layer with PHP services, OpenAPI/Swagger documentation and a Spoonacular ingredient/nutrition service. Also helped prepare integration tests and diagnose local setup problems. All code was reviewed and exercised locally with Swagger.
+
+Main prompts (summarized):
+
+1. Extend the five existing DAOs with service-layer validation and REST routes using FlightPHP.
+2. Add OpenAPI documentation and Swagger UI for the available endpoints.
+3. Integrate Spoonacular securely on the backend, then test CRUD operations and the external search endpoint.
+   Problems encountered and resolutions:
+4. Composer initially failed because the PHP installation used by the CLI (C:\tools\php84) did not have pdo_mysql enabled. Dependencies were installed while bypassing that platform check; the application was then run with XAMPP PHP 8.2 configured with pdo_mysql and curl. The missing CLI extension remains an environment issue to fix for a normal Composer workflow.
+5. Spoonacular initially returned HTTP 503 because no API key was configured. After adding a key to the Git-ignored local configuration, GET /api/nutrition/search?q=banana successfully returned ingredient results from the external API.
+6. A workout-plan/exercise association returned HTTP 400 (Unknown field: title) when plan-update fields were mistakenly sent to the association endpoint. Using the endpoint's expected sets, reps, rest_seconds and sort_order fields produced HTTP 201.
+   Verification: PHP syntax checks and service validation tests passed in the prepared package. Local Swagger tests succeeded for Users, Exercises, Workout Plans, Appointments and Progress Logs CRUD operations; workout plan/exercise linking returned HTTP 201; live Spoonacular search returned banana-related ingredient results. A full authentication/authorization flow and frontend-to-API integration have not yet been implemented or tested.
